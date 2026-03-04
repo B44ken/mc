@@ -1,0 +1,1 @@
+void hookEmInputs(std::string canvas);

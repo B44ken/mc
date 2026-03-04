@@ -1,0 +1,30 @@
+.DS_Store
+.vscode/
+.playwright-mcp/
+
+# build outputs
+build/
+**/cmake-build-*/
+**/CMakeFiles/
+**/CMakeCache.txt
+**/Makefile
+**/*.o
+**/*.obj
+**/*.a
+**/*.so
+**/*.dylib
+**/*.dll
+
+# emscripten/web artifacts generated in build dirs
+**/*.wasm
+**/*.js
+**/*.data
+**/*.mem
+**/*.worker.js
+
+# node
+server/node_modules/
+server/.npm/
+
+# logs
+*.log
