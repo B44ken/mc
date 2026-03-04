@@ -10,7 +10,7 @@ set(SRC ${ROOT}/src)
 execute_process(
   COMMAND python3 -c
 "from pathlib import Path
-mk = Path(r'${ROOT}/project/android_java/jni/Android.mk').read_text()
+mk = Path(r'${CMAKE_CURRENT_SOURCE_DIR}/Android.mk').read_text()
 start = mk.index('LOCAL_SRC_FILES :=')
 end = mk.index('LOCAL_CFLAGS :=', start)
 block = mk[start:end].split(':=', 1)[1]
