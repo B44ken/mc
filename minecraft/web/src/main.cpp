@@ -17,14 +17,13 @@
 #include "texture.h"
 #include "keyboard.h"
 
-namespace {
-  typedef DialogDefinitions DDef;
+typedef DialogDefinitions DDef;
 
 static void png_funcReadFile(png_structp pngPtr, png_bytep data, png_size_t length) {
   ((std::istream*)png_get_io_ptr(pngPtr))->read((char*)data, length);
 }
 
-constexpr int kCanvasWidth = 1280, kCanvasHeight = 720;
+const int canvasWd = 1280, canvasHt = 720;
 
 class AppPlatform_web final : public AppPlatform {
  public:
@@ -68,17 +67,15 @@ class AppPlatform_web final : public AppPlatform {
 
   TextureData loadTexture(const std::string& file, bool folder) override { return loadTextureHack(file, folder); }
 
-  int getScreenWidth() override { return kCanvasWidth; }
-  int getScreenHeight() override { return kCanvasHeight; }
+  int getScreenWidth() override { return canvasWd; }
+  int getScreenHeight() override { return canvasHt; }
   float getPixelsPerMillimeter() override { return 8.0f; }
   bool supportsTouchscreen() override { return false; }
   bool isNetworkEnabled(bool) override { return true; }
   std::string getDateString(int s) override { return std::to_string(s); }
   int checkLicense() override { return 1; }
 
- private:
-  int dialogId = -1;
-  int status = -1;
+  int dialogId = -1, status = -1;
   StringVector inputs;
 };
 
@@ -97,18 +94,16 @@ void tick() {
     app->options.isJoyTouchArea = false;
     app->reloadOptions();
     app->options.serverVisible = true;
-    app->setSize(kCanvasWidth, kCanvasHeight);
+    app->setSize(canvasWd, canvasHt);
     booted = true;
   } else app->update();
 }
-
-}  // namespace
 
 int main() {
   EmscriptenWebGLContextAttributes attrs;
   emscripten_webgl_init_context_attributes(&attrs);
 
-  emscripten_set_canvas_element_size("#canvas", kCanvasWidth, kCanvasHeight);
+  emscripten_set_canvas_element_size("#canvas", canvasWd, canvasHt);
   auto glContext = emscripten_webgl_create_context("#canvas", &attrs);
   emscripten_webgl_make_context_current(glContext);
 

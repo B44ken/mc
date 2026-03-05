@@ -121,6 +121,16 @@ void ServerSideNetworkHandler::entityRemoved(Entity* e)
 
 void ServerSideNetworkHandler::redistributePacket(Packet* packet, const RakNet::RakNetGUID& fromPlayer)
 {
+	#ifdef __EMSCRIPTEN__
+		if (!level) {
+			raknetInstance->send(*packet);
+			return;
+		}
+		const RakNet::RakNetGUID localGuid = getLocalGuid(raknetInstance, rakPeer);
+		for (auto play : level->players)
+			if (play->owner != fromPlayer && play->owner != localGuid) raknetInstance->send(play->owner, *packet);
+		return;
+	#endif
 	if (rakPeer) {
 		RakNet::BitStream bitStream;
 		packet->write(&bitStream);

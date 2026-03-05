@@ -194,7 +194,7 @@ Minecraft::Minecraft()
 //#ifdef ANDROID
 
 #if defined(__EMSCRIPTEN__)
-	raknetInstance = new WSNetInstance();
+	raknetInstance = new WSRakInstance();
 #elif defined(NO_NETWORK)
     raknetInstance = new IRakNetInstance();
 #else

@@ -1,26 +1,27 @@
 #pragma once
 #include "../../handheld/src/network/RakNetInstance.h"
+typedef ::Packet mcPacket;
 
-class WSNetInstance : public IRakNetInstance {
+class WSRakInstance : public IRakNetInstance {
 public:
-    WSNetInstance();
+    WSRakInstance();
 
     bool host(const std::string& localName, int port, int maxConnections = 4) override;
     bool connect(const char* host, int port) override;
     const ServerList& getServerList() override;
-    void disconnect() override;
     
     void runEvents(NetEventCallback* callback) override;
-    void send(Packet& packet) override;
-    void send(const RakNet::RakNetGUID& guid, Packet& packet) override;
+    void send(mcPacket& packet) override;
+    void send(const RakNet::RakNetGUID& guid, mcPacket& packet) override;
     
-    void announceServer(const std::string& localName) override;
-    
+    // void disconnect() override;
+    // void announceServer(const std::string& localName) override;
     // void pingForHosts(int port) override;
     // void stopPingForHosts() override;
     // void clearServerList() override;
 
-private:
+    std::vector<std::vector<uint8_t>> queueIn, queueOut;
     ServerList servers;
-    std::string localName;
+    int sock = -1, didOnConnect = 0;
+
 };
