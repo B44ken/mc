@@ -1,9 +1,13 @@
 .DS_Store
+*.swp
 .vscode/
 .playwright-mcp/
 
-# build outputs
-build/
+# build internals
+build/CMakeFiles/
+build/CMakeCache.txt
+build/Makefile
+build/cmake_install.cmake
 **/cmake-build-*/
 **/CMakeFiles/
 **/CMakeCache.txt
@@ -15,16 +19,11 @@ build/
 **/*.dylib
 **/*.dll
 
-# emscripten/web artifacts generated in build dirs
-**/*.wasm
-**/*.js
-**/*.data
-**/*.mem
-**/*.worker.js
-
 # node
+frontend/node_modules/
 server/node_modules/
 server/.npm/
+tests/node_modules/
 
 # logs
 *.log
